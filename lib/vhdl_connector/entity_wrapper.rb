@@ -19,15 +19,15 @@ module VhdlConnector
 
     def to_component
       View.new(
-        template_path('component_map.vhd.erb'),
-        Presenters::ComponentMapPresenter.new(self)
+        template_path('component.vhd.erb'),
+        Presenters::ComponentDefinitionPresenter.new(self)
       ).run
     end
 
     def to_component_map
       View.new(
         template_path('component_map.vhd.erb'),
-        Presenters::ComponentDefinitionPresenter.new(self)
+        Presenters::ComponentMapPresenter.new(self)
       ).run
     end
   end
