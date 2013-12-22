@@ -1,10 +1,10 @@
 component <%= name %>
-<%- unless generics.size.empty? %>
+<%- unless generics.empty? %>
   generic(
       <%= generic_definitions %>
          )
 <%- end %>
-<%- unless ports.size.empty? %>
+<%- unless ports.empty? %>
   port(
       <%= port_definitions %>
        )
