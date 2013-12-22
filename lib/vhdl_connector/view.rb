@@ -8,7 +8,7 @@ module VhdlConnector
     end
 
     def run
-      erb = File.read(File.read(@template_path), nil, '-')
+      erb = ERB.new(File.read(@template_path), nil, '-')
       @result = @presenter.instance_eval { erb.result(binding) }
     end
   end
