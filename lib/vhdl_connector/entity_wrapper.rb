@@ -19,14 +19,14 @@ module VhdlConnector
       @ports ||= @entity.ports.map { |g| PortWrapper.new(g) }
     end
 
-    def to_component
+    def to_component_definition
       View.new(
         template_path('component.vhd.erb'),
         Presenters::ComponentDefinitionPresenter.new(self)
       ).run
     end
 
-    def to_component_map
+    def to_component_mappping
       View.new(
         template_path('component_map.vhd.erb'),
         Presenters::ComponentMapPresenter.new(self)
