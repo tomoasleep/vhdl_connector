@@ -1,3 +1,5 @@
+require 'vhdl_parser'
+
 require "vhdl_connector/version"
 require "vhdl_connector/helper"
 require "vhdl_connector/presenters"
