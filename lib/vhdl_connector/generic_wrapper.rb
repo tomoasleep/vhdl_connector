@@ -5,7 +5,8 @@ module VhdlConnector
   class GenericWrapper
     extend Forwardable
     def_instance_delegators :@generic,
-      :name, :direction, :type, :value
+      :name, :direction, :type,
+      :value, :left, :right, :size_dir
 
     def initialize(generic)
       @generic = generic
@@ -21,7 +22,11 @@ module VhdlConnector
 
     private
     def type_description
-      "#{type} #{type_description}"
+      "#{type}#{range_description}"
+    end
+
+    def range_description
+      "(#{left} #{size_dir} #{right})" if size_dir
     end
 
     def default_value_description
