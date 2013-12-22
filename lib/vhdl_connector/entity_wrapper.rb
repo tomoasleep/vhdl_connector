@@ -26,7 +26,7 @@ module VhdlConnector
       ).run
     end
 
-    def to_component_mappping
+    def to_component_mapping
       View.new(
         template_path('component_mapping.vhd.erb'),
         Presenters::ComponentMappingPresenter.new(self)
