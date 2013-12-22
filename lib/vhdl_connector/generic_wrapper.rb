@@ -3,10 +3,11 @@ require 'forwardable'
 
 module VhdlConnector
   class GenericWrapper
+    extend Forwardable
     def_instance_delegators :@generic,
-      :name, :direction, :type, value
+      :name, :direction, :type, :value
 
-    def initialize(entity)
+    def initialize(generic)
       @generic = generic
     end
 
