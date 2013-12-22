@@ -1,5 +1,5 @@
 module VhdlConnector::Presenters
-  class ComponentMapPresenter < EntityPresenter
+  class ComponentMappingPresenter < EntityPresenter
     def generic_mappings
       generics.map { |g| g.mapping }.join(',\n')
     end
