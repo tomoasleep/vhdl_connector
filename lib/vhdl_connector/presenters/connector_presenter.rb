@@ -1,8 +1,11 @@
 module VhdlConnector::Presenters
   class ConnectorPresenter
     include VhdlConnector::Helper
-    def set_cwd(path)
-      @cwd = path
+    attr_writer :cwd
+    def initialize(entities: [], packages: [], cwd: nil)
+      @dependency_entities = entities
+      @dependency_packages = packages
+      @cwd = cwd
     end
 
     def cwd
