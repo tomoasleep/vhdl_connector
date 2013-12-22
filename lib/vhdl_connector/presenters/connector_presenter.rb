@@ -1,6 +1,6 @@
 module VhdlConnector::Presenters
   class ConnectorPresenter
-    include Helper
+    include VhdlConnector::Helper
     def set_cwd(path)
       @cwd = path
     end
