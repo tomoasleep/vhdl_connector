@@ -11,12 +11,14 @@ require "vhdl_connector/port_wrapper"
 
 module VhdlConnector
   class << self
-    def parse_entity(vhdl_str)
-      EntityWrapper.new(VHDL_Parser.parse(vhdl_str))
-    end
+    import VhdlConnector
+  end
 
-    def parse_entity_file(path)
-      EntityWrapper.new(VHDL_Parser.parse_file(path))
-    end
+  def parse_entity(vhdl_str)
+    EntityWrapper.new(VHDL_Parser.parse(vhdl_str))
+  end
+
+  def parse_entity_file(path)
+    EntityWrapper.new(VHDL_Parser.parse_file(path))
   end
 end
