@@ -21,4 +21,8 @@ module VhdlConnector
   def parse_entity_file(path)
     EntityWrapper.new(VHDL_Parser.parse_file(path))
   end
+
+  def parse_connector(erb_path)
+    View.new(erb_path, ConnectorPresenter.new).run
+  end
 end
