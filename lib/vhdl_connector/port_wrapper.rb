@@ -2,10 +2,11 @@ require 'forwardable'
 
 module VhdlConnector
   class PortWrapper
+    extend Forwardable
     def_instance_delegators :@port,
       :name, :direction, :type
 
-    def initialize(entity)
+    def initialize(port)
       @port = port
     end
 
