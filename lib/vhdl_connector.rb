@@ -11,7 +11,7 @@ require "vhdl_connector/port_wrapper"
 
 module VhdlConnector
   class << self
-    import VhdlConnector
+    include VhdlConnector
   end
 
   def parse_entity(vhdl_str)
