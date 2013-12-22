@@ -1,0 +1,12 @@
+<%= "component_#{name}" %>: <%= name %>
+<%- unless generics.size.empty? %>
+  generic map(
+      <%= generic_mappings %>
+         )
+<%- end %>
+<%- unless ports.size.empty? %>
+  port map(
+      <%= port_mappings %>
+       )
+<%- end %>
+;
