@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = VhdlConnector::VERSION
   spec.authors       = ["Tomoya Chiba"]
   spec.email         = ["tomo.asleep@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Write commponent's definitions of VHDL automatically.}
+  spec.summary       = %q{Write commponent's definitions of VHDL automatically.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
