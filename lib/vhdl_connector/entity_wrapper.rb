@@ -3,6 +3,8 @@ require 'forwardable'
 module VhdlConnector
   class EntityWrapper
     extend Forwardable
+    include Helper
+
     def_instance_delegators :@entity, :name
 
     def initialize(entity)
