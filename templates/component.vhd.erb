@@ -1,0 +1,13 @@
+component <%= name %>
+<%- unless generics.size.empty? %>
+  generic(
+      <%= generic_definitions %>
+         )
+<%- end %>
+<%- unless ports.size.empty? %>
+  port(
+      <%= port_definitions %>
+       )
+<%- end %>
+end component;
+
