@@ -5,10 +5,12 @@ module VhdlConnector
     extend Forwardable
     include Helper
 
+    attr_reader :entity, :local_name
     def_instance_delegators :@entity, :name
 
-    def initialize(entity)
+    def initialize(entity, local_name: nil)
       @entity = entity
+      @local_name = local_name
     end
 
     def generics
