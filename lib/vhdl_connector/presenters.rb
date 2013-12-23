@@ -4,7 +4,7 @@ module VhdlConnector::Presenters
   class EntityPresenter
     extend Forwardable
     def_instance_delegators :@entity,
-      :name, :generics, :ports
+      :name, :generics, :ports, :local_name
     def initialize(entity_wrapper)
       @entity = entity_wrapper
     end
