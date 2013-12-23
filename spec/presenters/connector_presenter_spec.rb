@@ -33,8 +33,8 @@ module VhdlConnector::Presenters
       end
     end
 
-    describe '#header_obj' do
-      subject { ConnectorPresenter.new(entities: entities).header_obj }
+    describe '#component_definitions_obj' do
+      subject { ConnectorPresenter.new(entities: entities).component_definitions_obj }
       let(:entities) { entity_pathes.map { |path| VhdlConnector.parse_entity_file(path) } }
 
       context 'use no generic entity' do
