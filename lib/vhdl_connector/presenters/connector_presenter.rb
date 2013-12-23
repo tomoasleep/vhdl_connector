@@ -35,15 +35,15 @@ module VhdlConnector::Presenters
         .flatten
     end
 
-    def header(*options)
-      header_obj(*options).join('\n')
+    def component_definitions(*options)
+      component_definitions_obj(*options).join("\n")
     end
 
     def mapping(*options)
-      mapping_obj(*options).join('\n')
+      mapping_obj(*options).join("\n")
     end
 
-    def header_obj(*options)
+    def component_definitions_obj(*options)
       @dependency_entities.map { |entity| entity.to_component_definition }
     end
 
