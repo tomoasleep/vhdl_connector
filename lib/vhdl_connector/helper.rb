@@ -14,3 +14,9 @@ module VhdlConnector::Helper
     args.select { |arg| not args.is_a? Hash }
   end
 end
+
+class Hash
+  def symbolize_keys
+    Hash[self.map { |k, v| [k.to_sym, v]}]
+  end
+end
