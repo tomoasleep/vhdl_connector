@@ -9,9 +9,27 @@ module VhdlConnector::Presenters
       context 'add no generic entity' do
         let(:options) { Hash.new }
 
-        it do
-          expect(subject.size).to be(1)
-        end
+        it { expect(subject.size).to be(1) }
+      end
+
+      context 'add no generic entity with named alias' do
+        let(:options) { { as: { alu: 'java' } } }
+
+        it { expect(subject.size).to be(1) }
+        it { expect(subject.first.local_name).to eq('java') }
+      end
+
+      context 'add no generic entity with named aliases' do
+        let(:options) { { as: { alu: %w(java internet) } } }
+
+        it { expect(subject.size).to be(2) }
+      end
+
+      context 'add no generic entity with alias' do
+        let(:options) { {as: 'java' } }
+
+        it { expect(subject.size).to be(1) }
+        it { expect(subject.first.local_name).to eq('java') }
       end
     end
 
@@ -22,10 +40,8 @@ module VhdlConnector::Presenters
       context 'use no generic entity' do
         let(:entity_pathes) { %w{./examples/no_generics_entity.vhd} } 
 
-        it do
-          expect(subject.size).to be(1)
-          expect(subject.first).to match %r{port\(\s*a\s*:\s*in\s*std_logic_vector}
-        end
+        it { expect(subject.size).to be(1) }
+        it { expect(subject.first).to match %r{port\(\s*a\s*:\s*in\s*std_logic_vector} }
       end
     end
   end
