@@ -25,8 +25,8 @@ module VhdlConnector::Presenters
       options.map do |key, value|
         case key.to_sym
         when :as
-          name_map = value.is_a? Hash ? value : { new_entities.first.name => value }
-          @aliases.merge name_map.symbolize_keys
+          name_map = (value.is_a? Hash) ? value : { new_entities.first.name => value }
+          @aliases.merge! name_map.symbolize_keys
         end
       end
 
@@ -53,14 +53,11 @@ module VhdlConnector::Presenters
 
     private
     def resolve_aliases(entity)
-      names = @aliases[entity.name.to_sym]
-      return entity unless names
+      aliases_key = @aliases[entity.name.to_sym]
+      return entity unless aliases_key
 
-      case names
-      when Array
-        names.map { |name| EntityWrapper.new(entity.entity, local_name: name.to_s) }
-      else
-      end
+      aliases = (aliases_key.is_a? Array) ? aliases_key : [aliases_key]
+      aliases.map { |name| VhdlConnector::EntityWrapper.new(entity.entity, local_name: name.to_s) }
     end
   end
 end
