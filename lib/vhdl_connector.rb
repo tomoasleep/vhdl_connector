@@ -23,6 +23,6 @@ module VhdlConnector
   end
 
   def parse_connector(erb_path)
-    View.new(erb_path, ConnectorPresenter.new).run
+    View.new(erb_path, Presenters::ConnectorPresenter.new).run
   end
 end
