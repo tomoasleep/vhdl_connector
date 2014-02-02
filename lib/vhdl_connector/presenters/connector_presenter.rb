@@ -39,16 +39,24 @@ module VhdlConnector::Presenters
       component_definitions_obj(*options).join("\n")
     end
 
-    def mapping(*options)
-      mapping_obj(*options).join("\n")
+    def component_signal_definitions(options = {})
+      component_signal_definitions_obj(options).join("\n")
+    end
+
+    def mapping(options = {})
+      mapping_obj(options).join("\n")
     end
 
     def component_definitions_obj(*options)
       @dependency_entities.map { |entity| entity.to_component_definition }
     end
 
-    def mapping_obj(*options)
-      components.map { |entity| entity.to_component_mapping }
+    def component_signal_definitions_obj(options = {})
+      components.map { |entity| entity.to_component_signal_definition(options) }
+    end
+
+    def mapping_obj(options = {})
+      components.map { |entity| entity.to_component_mapping(options) }
     end
 
     private
