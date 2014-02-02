@@ -28,10 +28,17 @@ module VhdlConnector
       ).run
     end
 
-    def to_component_mapping
+    def to_component_signal_definition(options = {})
+      View.new(
+        template_path('signal_definition.vhd.erb'),
+        Presenters::SignalDefinitionPresenter.new(self)
+      ).run
+    end
+
+    def to_component_mapping(options = {})
       View.new(
         template_path('component_mapping.vhd.erb'),
-        Presenters::ComponentMappingPresenter.new(self)
+        Presenters::ComponentMappingPresenter.new(self, options)
       ).run
     end
   end

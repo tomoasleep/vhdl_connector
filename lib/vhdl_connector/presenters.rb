@@ -14,4 +14,5 @@ end
 require_relative 'presenters/component_definition_presenter'
 require_relative 'presenters/component_mapping_presenter'
 require_relative 'presenters/connector_presenter'
+require_relative 'presenters/signal_definition_presenter'
 
