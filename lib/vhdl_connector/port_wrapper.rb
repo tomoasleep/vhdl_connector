@@ -11,11 +11,10 @@ module VhdlConnector
       @port = port
     end
 
-    def definition
+    def definition()
       "#{name} : #{direction} #{type_description}".strip
     end
 
-    private
     def type_description
       "#{type}#{range_description}"
     end
