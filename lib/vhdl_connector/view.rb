@@ -8,8 +8,16 @@ module VhdlConnector
     end
 
     def run
-      erb = ERB.new(File.read(@template_path), nil, '-')
-      @result = @presenter.instance_eval { erb.result(binding) }
+      code = template
+      @result = @presenter.instance_eval { code.result(binding) }
+    end
+
+    def template
+      mk_template(File.read(@template_path))
+    end
+
+    def mk_template(text)
+      ERB.new(text, nil, '-')
     end
   end
 end

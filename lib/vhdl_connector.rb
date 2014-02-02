@@ -4,6 +4,9 @@ require "vhdl_connector/version"
 require "vhdl_connector/helper"
 require "vhdl_connector/presenters"
 require "vhdl_connector/view"
+require "vhdl_connector/connector_view"
+require "vhdl_connector/connector_reader"
+require "vhdl_connector/block_decorator"
 
 require "vhdl_connector/entity_wrapper"
 require "vhdl_connector/generic_wrapper"
@@ -23,6 +26,8 @@ module VhdlConnector
   end
 
   def parse_connector(erb_path)
-    View.new(erb_path, Presenters::ConnectorPresenter.new).run
+    ConnectorView.new(
+      erb_path, Presenters::ConnectorPresenter.new, ConnectorReader.new
+    ).run
   end
 end

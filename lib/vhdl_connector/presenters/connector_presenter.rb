@@ -36,16 +36,24 @@ module VhdlConnector::Presenters
     end
 
     def component_definitions(*options)
-      component_definitions_obj(*options).join("\n")
+      VhdlConnector::BlockDecorator.decorate_component_definition_block(
+        component_definitions_obj(*options).join("\n")
+      )
     end
 
     def component_signal_definitions(options = {})
-      component_signal_definitions_obj(options).join("\n")
+      VhdlConnector::BlockDecorator.decorate_signal_block(
+        component_signal_definitions_obj(options).join("\n")
+      )
     end
 
-    def mapping(options = {})
-      mapping_obj(options).join("\n")
+    def component_mappings(options = {})
+      VhdlConnector::BlockDecorator.decorate_component_mapping_block(
+        mapping_obj(options).join("\n")
+      )
     end
+
+    alias mapping component_mappings
 
     def component_definitions_obj(*options)
       @dependency_entities.map { |entity| entity.to_component_definition }
