@@ -47,7 +47,12 @@ module VhdlConnector::Presenters
       )
     end
 
+    def define_component_mappings(options = {})
+      @mapping_options = options
+    end
+
     def component_mappings(options = {})
+      options = (@mapping_options || {}).merge options
       VhdlConnector::BlockDecorator.decorate_component_mapping_block(
         mapping_obj(options).join("\n")
       )
