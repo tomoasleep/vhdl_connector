@@ -6,16 +6,16 @@ module VhdlConnector
     SIGNAL_LABEL = /SIGNAL\s*BLOCK/
 
     COMPONENT_DEFINITION_BLOCK =
-      /^\s*--\s*#{COMPONENT_DEFINITION_LABEL}(.*?)--\s*COMPONENT\s*DEFINITION\s*BLOCK\s*END.*$/
+      /^\s*-{2,}?\s*#{COMPONENT_DEFINITION_LABEL}\s*BEGIN(.*?)#{COMPONENT_DEFINITION_LABEL}\s*END.*?$/m
     COMPONENT_MAPPING_BLOCK =
-      /^\s*--\s*#{COMPONENT_MAPPING_LABEL}\s*BEGIN(.*?)--\s*COMPONENT\s*MAPPING\s*BLOCK\s*END.*$/
-    SIGNAL_BLOCK = /^\s*--\s*#{SIGNAL_LABEL}\s*BEGIN(.*?)--\s*SIGNAL\s*BLOCK\s*END.*$/
+      /^\s*-{2,}?\s*#{COMPONENT_MAPPING_LABEL}\s*BEGIN(.*?)#{COMPONENT_MAPPING_LABEL}\s*END.*?$/m
+    SIGNAL_BLOCK = /^\s*-{2,}?\s*#{SIGNAL_LABEL}\s*BEGIN(.*?)#{SIGNAL_LABEL}\s*END.*?$/m
 
     RUBY_BLOCK = /^(-- )?(.*)<%(.*?)%>/
 
-    COMPONENT_MAPPING_LINE = /#{COMPONENT_MAPPING_LABEL}\s*$/
-    COMPONENT_DEFINITION_LINE = /#{COMPONENT_DEFINITION_LABEL}\s*$/
-    SIGNAL_LINE = /#{SIGNAL_LABEL}\s*$/
+    COMPONENT_MAPPING_LINE = /(--)?(\s*)#{COMPONENT_MAPPING_LABEL}\s*$/
+    COMPONENT_DEFINITION_LINE = /(--)?(\s*)#{COMPONENT_DEFINITION_LABEL}\s*$/
+    SIGNAL_LINE = /(--)?(\s*)#{SIGNAL_LABEL}\s*$/
 
     def decorate_component_definition_block(block)
       "-- COMPONENT DEFINITION BLOCK BEGIN {{{\n#{block}\n-- COMPONENT DEFINITION BLOCK END }}}"
@@ -54,7 +54,7 @@ module VhdlConnector
     end
 
     def undecorate_signal_definition_block(code)
-      code.gsub(COMPONENT_DEFINITION_BLOCK) do |text|
+      code.gsub(SIGNAL_BLOCK) do |text|
         %q(<%= component_signal_definitions %>)
       end
     end
