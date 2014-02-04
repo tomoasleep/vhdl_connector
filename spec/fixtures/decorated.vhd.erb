@@ -1,0 +1,176 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+-- not_to_delete
+-- <%- components %w(fpu_controller sub_fpu) -%>
+-- <%- components %w(branch_condition_checker) -%>
+
+-- not_to_delete
+entity ex_path is
+  port(
+        pc: in pc_data_type;
+        tag_in: in request_tag_type;
+        tag_out: out request_tag_type;
+
+        clk : in std_logic
+      );
+end ex_path;
+
+-- not_to_delete
+architecture behave of ex_path is
+
+-- COMPONENT DEFINITION BLOCK BEGIN {{{
+-- compdef_mark
+component fpu_controller
+
+
+  port(
+      a : in std_logic_vector(31 downto 0);
+b : in std_logic_vector(31 downto 0);
+fpu_ctl : in fpu_ctl_type;
+result : out std_logic_vector(31 downto 0);
+done : out std_logic;
+clk : in std_logic
+       )
+
+;
+end component;
+
+
+component sub_fpu
+
+
+  port(
+      a : in std_logic_vector(31 downto 0);
+b : in std_logic_vector(31 downto 0);
+fpu_ctl : in fpu_ctl_type;
+result : out std_logic_vector(31 downto 0);
+done : out std_logic;
+clk : in std_logic
+       )
+
+;
+end component;
+
+
+component branch_condition_checker
+
+
+  port(
+      rs : in word_data_type;
+rt : in word_data_type;
+i_op : in opcode_type;
+enable : in std_logic;
+branch_go : out std_logic
+       )
+
+;
+end component;
+
+
+-- COMPONENT DEFINITION BLOCK END }}}
+-- SIGNAL BLOCK BEGIN {{{
+-- signal_mark
+  signal fpu_controller_a : std_logic_vector(31 downto 0);
+signal fpu_controller_b : std_logic_vector(31 downto 0);
+signal fpu_controller_fpu_ctl : fpu_ctl_type;
+signal fpu_controller_result : std_logic_vector(31 downto 0);
+signal fpu_controller_done : std_logic;
+signal fpu_controller_clk : std_logic;
+
+  signal sub_fpu_a : std_logic_vector(31 downto 0);
+signal sub_fpu_b : std_logic_vector(31 downto 0);
+signal sub_fpu_fpu_ctl : fpu_ctl_type;
+signal sub_fpu_result : std_logic_vector(31 downto 0);
+signal sub_fpu_done : std_logic;
+signal sub_fpu_clk : std_logic;
+
+  signal branch_condition_checker_rs : word_data_type;
+signal branch_condition_checker_rt : word_data_type;
+signal branch_condition_checker_i_op : opcode_type;
+signal branch_condition_checker_enable : std_logic;
+signal branch_condition_checker_branch_go : std_logic;
+
+-- SIGNAL BLOCK END }}}
+
+  constant zero : word_data_type := (others => '0');
+
+-- not_to_delete
+  signal pc_rs_write, pc_jta_write: std_logic;
+
+begin
+-- COMPONENT MAPPING BLOCK BEGIN {{{
+
+-- component_mark
+
+fpu_controller_comp: fpu_controller
+  port map(
+      a => fpu_controller_a,
+b => fpu_controller_b,
+fpu_ctl => fpu_controller_fpu_ctl,
+result => fpu_controller_result,
+done => fpu_controller_done,
+clk => fpu_controller_clk
+       )
+;
+
+sub_fpu_comp: sub_fpu
+  port map(
+      a => sub_fpu_a,
+b => sub_fpu_b,
+fpu_ctl => sub_fpu_fpu_ctl,
+result => sub_fpu_result,
+done => sub_fpu_done,
+clk => sub_fpu_clk
+       )
+;
+
+branch_condition_checker_comp: branch_condition_checker
+  port map(
+      rs => branch_condition_checker_rs,
+rt => branch_condition_checker_rt,
+i_op => branch_condition_checker_i_op,
+enable => branch_condition_checker_enable,
+branch_go => branch_condition_checker_branch_go
+       )
+;
+
+-- COMPONENT MAPPING BLOCK END }}}
+
+-- not_to_delete
+  with ex_calc_srcB select
+    calc_input2 <= int_rd1 when calc_srcB_rd2,
+                   signex_imm when calc_srcB_imm,
+                   x"0000" & imm when calc_srcB_zimm,
+                   x"000000" & "000" & shamt when others;
+
+  signex_imm(31 downto 16) <= (others => imm(15));
+  signex_imm(15 downto  0) <= imm;
+
+  with exec_ctl_ex_result_src select
+    result <= alu_result when ex_result_src_alu,
+              fpu_result when ex_result_src_fpu,
+              sub_fpu_result when ex_result_src_sub_fpu,
+              mem_read_data when ex_result_src_mem,
+              io_read_data when ex_result_src_io,
+              zero when others;
+
+  with exec_ctl_ex_result_src select
+    tag_out <= tag_in when ex_result_src_alu,
+               fpu_tag_out when ex_result_src_fpu,
+               sub_fpu_tag_out when ex_result_src_sub_fpu,
+               zero when others;
+
+  fpu_tag_in <= tag_in;
+  sub_fpu_tag_in <= tag_in;
+
+  branch_condition_checker_rs <= int_rd1;
+  branch_condition_checker_rt <= int_rd2;
+  branch_condition_checker_i_op <= opcode;
+  branch_condition_checker_enable <= exec_ctl_branch;
+
+-- not_to_delete
+
+end behave;
+
