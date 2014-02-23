@@ -2,13 +2,12 @@ component <%= name %>
 <%- unless generics.empty? %>
   generic(
       <%= generic_definitions %>
-         )
+         );
 <%- end %>
 <%- unless ports.empty? %>
   port(
       <%= port_definitions %>
-       )
+       );
 <%- end %>
-;
 end component;
 
